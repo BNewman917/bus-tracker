@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Real-time Bus Tracker</title>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js"></script>
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
+      .map-overlay {
+        position: absolute;
+        left: 0;
+        padding: 10px;
+      }
+      .run-tracker {
+        position: absolute;
+        top: 0;
+        margin: 5px;
+        z-index: 2;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div class="run-tracker">
+      <button onclick="runTracker()">Run Tracker</button>
+    </div>
+    <script>
+      let markers = [];
+      
+
+      mapboxgl.accessToken =
+        "pk.eyJ1IjoiYnJlbnRuZXdtYW45MTciLCJhIjoiY2wwdTU2ZmtjMHR5MzNicGs0NHJjMTAzOSJ9.n6Yzkv6m8m6TCD-au4njGg";
+
+      const map = new mapboxgl.Map({
+        container: "map",
+        style: "mapbox://styles/mapbox/streets-v11",
+        center: [-71.091542, 42.358862],
+        zoom: 12,
+      });
+
+      async function runTracker() {
+        // get bus data
+        const locations = await getBusLocations();
+        console.log(new Date());
+        console.log(locations);
+        locations.forEach((bus) => {
+          const markerObj = markerId(bus.id);
+          if (markerObj) {
+            const marker = Object.values(markerObj)[0];
+            updateMarker(marker, bus);
+          } else {
+            newMarker(bus, bus.id);
+          }
+        });
+        // timer
+        setTimeout(runTracker, 15000);
+      }
+
+      // Request bus data from MBTA
+      async function getBusLocations() {
+        const url =
+          "https://api-v3.mbta.com/vehicles?filter[route]=1&include=trip";
+        const response = await fetch(url);
+        const json = await response.json();
+        return json.data;
+      }
+
+      // Create new marker and push to array
+      function newMarker(bus, id) {
+        const marker = new mapboxgl.Marker()
+          .setLngLat([bus.attributes.longitude, bus.attributes.latitude])
+          .addTo(map);
+        const item = {
+          marker: marker,
+          id: id,
+        };
+        markers.push(item);
+      }
+
+      // Update marker location
+      function updateMarker(marker, bus) {
+        marker.setLngLat([bus.attributes.longitude, bus.attributes.latitude]);
+      }
+
+      // Get marker by bus ID
+      function markerId(busId) {
+        const result = markers.find((item) => item.id === busId);
+        return result;
+      }
+    </script>
+  </body>
+</html>
