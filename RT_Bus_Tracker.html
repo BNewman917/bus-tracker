@@ -59,12 +59,12 @@
         console.log(new Date());
         console.log(locations);
         locations.forEach((bus) => {
-          const markerObj = markerId(bus.id);
+          const markerObj = markerId(bus.attributes.label);
           if (markerObj) {
             const marker = Object.values(markerObj)[0];
             updateMarker(marker, bus);
           } else {
-            newMarker(bus, bus.id);
+            newMarker(bus, bus.attributes.label);
           }
         });
         // timer
@@ -98,8 +98,8 @@
       }
 
       // Get marker by bus ID
-      function markerId(busId) {
-        const result = markers.find((item) => item.id === busId);
+      function markerId(label) {
+        const result = markers.find((item) => item.id === label);
         return result;
       }
     </script>
