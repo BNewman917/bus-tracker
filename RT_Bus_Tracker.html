@@ -41,7 +41,6 @@
     </div>
     <script>
       let markers = [];
-      
 
       mapboxgl.accessToken =
         "pk.eyJ1IjoiYnJlbnRuZXdtYW45MTciLCJhIjoiY2wwdTU2ZmtjMHR5MzNicGs0NHJjMTAzOSJ9.n6Yzkv6m8m6TCD-au4njGg";
@@ -84,6 +83,12 @@
       function newMarker(bus, id) {
         const marker = new mapboxgl.Marker()
           .setLngLat([bus.attributes.longitude, bus.attributes.latitude])
+          .setPopup(
+            new mapboxgl.Popup({
+              closeButton: false,
+              closeOnClick: false,
+            }).setHTML(bus.attributes.label)
+          )
           .addTo(map);
         const item = {
           marker: marker,
@@ -97,7 +102,7 @@
         marker.setLngLat([bus.attributes.longitude, bus.attributes.latitude]);
       }
 
-      // Get marker by bus ID
+      // Get marker by bus label
       function markerId(label) {
         const result = markers.find((item) => item.id === label);
         return result;
