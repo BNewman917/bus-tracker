@@ -4,18 +4,22 @@
 This is the Bust Tracker Exercise for Week 9 of MIT xPRO coding bootcamp.
 
 <h3>Description</h3>
-Tracks buses live using information from the [Massachusetts Bay Transportation Authority](https://www.mbta.com) on a map generated using [Mapbox](https://www.mapbox.com) to show buses around the MIT and Harvard campuses in real-time.
+
+Tracks buses live using information from the [Massachusetts Bay Transportation Authority](https://www.mbta.com/) on a map generated using [Mapbox](https://www.mapbox.com) to show buses around the MIT and Harvard campuses in real-time.
 
 <h3>How to Run</h3>
+
 <ol>
   <li>Click 'Run Tracker' in the top left corner to populate buses on the map</li>
   <li>Show/Hide bus ID by clicking on each marker</li>
 </ol>
 
 <h3>Future Plans</h3>
+
 I plan to update this map with more options to show different bus routes. I am also working on having the bus information display by hovering the mouse over each icon, rather than needing to click.
 
 <h3>Notes</h3>
+
 Much of this code was provided as part of the assignment.
 
 Copyright (c) 2020 John Williams
