@@ -16,7 +16,8 @@ Tracks buses live using information from the [Massachusetts Bay Transportation A
 
 <h3>Future Plans</h3>
 
-I plan to update this map with more options to show different bus routes. I am also working on having the bus information display by hovering the mouse over each icon, rather than needing to click.
+- More options to show different bus routes 
+- Bus information displayed by hovering the mouse over each icon, rather than needing to click.
 
 <h3>Notes</h3>
 
